@@ -1,0 +1,88 @@
+package merge_sort;
+import java.util.*;
+import java.util.ArrayList;
+class Merge_sort
+{
+	int n;
+	int srt[];
+	Merge_sort(int n)
+	{
+		this.n = n;
+		srt = new int[n];
+	}
+	
+	void merge(int arr[],int l,int m , int h)
+	{
+		int i = l;
+		int j = m+1;
+		int k = l;
+		
+		while(i<=m && j<=h)
+		{
+			if(arr[i]<=arr[j]) srt[k++] = arr[i++];
+			else srt[k++] = arr[j++];
+		}
+		
+		while(i<=m) srt[k++] = arr[i++];
+		while(j<=h) srt[k++] = arr[j++];
+		
+		k = l;
+		
+		while(k<=h) 
+		{
+			arr[k] = srt[k++];
+			
+		}
+	}
+	void i_sort(int arr[],int l, int h)
+	{
+		int i,j,key;
+	    for(i = l+1 ; i<=h ; i++)
+	    {
+	        key = arr[i];
+	        for(j = i-1 ; j>=l && key<arr[j] ; j--)
+	        {
+	            arr[j+1] = arr[j];
+	        }
+	        arr[j+1] = key;
+	    }
+	}
+	void merge_sort(int arr[],int l,int h)
+	{
+		if(l<h)
+		{
+			if(h-l<=10) i_sort(arr,l,h);
+			else
+			{
+				int m = l+(h-l)/2;
+				merge_sort(arr,l,m);
+				merge_sort(arr,m+1,h);
+				
+				merge(arr,l,m,h);
+			}
+		}
+	}
+}
+
+public class Main 
+{
+	public static void main(String[] args) 
+	{
+		int n,i,a;
+		Scanner sc = new Scanner(System.in);
+		n = sc.nextInt();
+		int arr[] = new int[n];
+		for(i = 0 ; i<n ; i++)
+		{
+			arr[i] = sc.nextInt();
+		}
+		
+		Merge_sort ms = new Merge_sort(n);
+		ms.merge_sort(arr,0,n-1);
+		
+		for(i =0 ; i<n ; i++)
+		{
+			System.out.print(arr[i]+ " ");
+		}
+	}
+}

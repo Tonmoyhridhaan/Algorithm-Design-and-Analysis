@@ -4,23 +4,27 @@ class Find_sequence
 {
 	int m,n,i;
 	String s1,s2;
+	int b[][];
+	int c[][];
 	Find_sequence(int m, int n,String s1,String s2)
 	{
 		this.m = m;
 		this.n = n;
 		this.s1 = s1;
 		this.s2 = s2;
+		b = new int[m+1][n+1];
+		c = new int[m+1][n+1];
+
 	}
-	int b[][] = new int[m+1][n+1]; 
-	int c[][] = new int[m+1][n+1];
-	
+
 	void print(int i,int j)
 	{
+		
 	    if(i == 0 || j == 0) return;
 	    if(b[i][j] == 1)
 	    {
 	        print(i-1,j-1);
-	        System.out.println(s1.charAt(i-1));
+	        System.out.print(s1.charAt(i-1));
 	    }
 	    else if(b[i][j] == 2)
 	    {
@@ -39,26 +43,24 @@ class Find_sequence
 	        {
 	            if(s1.charAt(i-1) == s2.charAt(j-1))
 	            {
-	            	System.out.println("if "+(i-1)+" "+j+" "+i+" "+(j-1));
 	                c[i][j] = c[i-1][j-1]+1;
 	                b[i][j] = 1;
 	            }
-	            //System.out.println((i-1)+" "+j+" "+i+" "+(j-1));
 	            else if( c[i-1][j] >= c[i][j-1])
 	            {
-	            	System.out.println("else if "+(i-1)+" "+j+" "+i+" "+(j-1));
 	                c[i][j] = c[i-1][j];
 	                b[i][j] = 2;
 	            }
 	            else
 	            {
-	            	System.out.println("else if "+(i-1)+" "+j+" "+i+" "+(j-1));
+	            	
 	                c[i][j] = c[i][j-1];
 	                b[i][j] = 3;
 	            }
 	        }
 	    }
 	}
+	
 }
 public class Main 
 {
@@ -70,10 +72,8 @@ public class Main
 		s1 = sc.next();
 		s2 = sc.next();
 		int m = s1.length(),n = s2.length();
-		System.out.println(m+" "+n);
 		Find_sequence fs = new Find_sequence(m,n,s1,s2);
 		fs.lcs();
 		fs.print(m,n);
 	}
-
 }

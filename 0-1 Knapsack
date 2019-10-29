@@ -1,0 +1,75 @@
+package knapsack;
+import java.util.*;
+class Knapsack
+{
+	int n;
+	int w[],b[],tw;
+	int c[][];
+	Knapsack(int w[],int b[],int tw, int n)
+	{
+		this.w = w;
+		this.b = b;
+		this.tw = tw;
+		this.n = n;
+		c = new int [n+1][tw+1];
+	}
+	void benefit()
+	{
+	    int i,j;
+	    for(i = 1 ; i<=n ; i++)
+	    {
+	        for(j = 1 ; j<= tw ; j++)
+	        {
+	            if(w[i]<=j)
+	            {
+	                if(c[i-1][j-w[i]] + b[i] > c[i-1][j])
+	                {
+	                    c[i][j] = c[i-1][j-w[i]] + b[i];
+	                }
+	                else c[i][j] = c[i-1][j];
+	            }
+	            else c[i][j] = c[i-1][j];
+	        }
+	    }
+	    System.out.println(c[n][tw]);
+	}
+	void print()
+	{
+		int i = n;
+	    int j = tw;
+
+	    while(i > 0 && j > 0)
+	    {
+	        if(c[i][j] == c[i-1][j]) i--;
+	        else
+	        {
+	            System.out.print(w[i]+" ");
+	            i--;
+	            j = j - w[i];
+	        }
+	    }
+	}
+	
+}
+public class Main 
+{
+
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		int n,tw,i;
+		n = sc.nextInt();
+		int b[] = new int[n+1];
+		int w[] = new int[n+1];
+		for(i = 1 ; i<=n ; i++)
+		{
+			w[i] = sc.nextInt();
+			b[i] = sc.nextInt();
+		}
+		tw = sc.nextInt();
+		Knapsack knpsk = new Knapsack(w,b,tw,n); 
+		knpsk.benefit();
+		knpsk.print();
+	}
+
+}

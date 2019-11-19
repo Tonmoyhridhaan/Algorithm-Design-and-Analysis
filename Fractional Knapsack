@@ -1,0 +1,65 @@
+package Fractionalknapsack;
+import java.util.*;
+
+class Pair
+{
+	 int first;
+	 double second;
+	 Pair(int first, double second)
+	 {
+		 this.first = first;
+		 this.second = second;
+	 }
+	 
+}
+
+/*class Compare implements Comparator<Pair> {
+    public int compare(Pair p1, Pair p2) {
+        return Double.compare(p1.second, p2.second);
+    }    
+}*/
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		double wp;
+		int w,b,i,n,W;
+		n = sc.nextInt();
+		W = sc.nextInt();
+		Pair arr[] = new Pair[n];
+		for(i = 0 ; i<n ; i++)
+		{
+			w = sc.nextInt();
+			b = sc.nextInt();
+			wp = (double)b/w;
+			arr[i] = new Pair(w,wp);
+		}
+		
+		Arrays.sort(arr, new Comparator<Pair>() { 
+            @Override public int compare(Pair p1, Pair p2) 
+            { 
+                return (int) ((p1.second*1000) - (p2.second*1000));
+            } 
+        }); 
+		
+		/*for(i = n-1 ; i>=0 ; i--)
+			System.out.println(arr[i].first+" "+arr[i].second);*/
+		
+		double tb = 0.0;
+		int tw = 0;
+		for ( i = n-1; i >= 0; i--) 
+		{ 
+			if(tw + arr[i].first <= W){
+	            tw += arr[i].first;
+	            tb += (double)arr[i].first*arr[i].second;
+	        }
+	        else{
+	            double remain = W - tw;
+	            tb = tb + (arr[i].second* (double)remain);
+	            break;
+	        }
+        } 
+		System.out.println(tb);
+	}
+}
